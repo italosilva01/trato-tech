@@ -281,6 +281,18 @@ const initialState = [
 const itemsSlice = createSlice({
   name: "items",
   initialState,
+  reducers: {
+    changeFavorite: (state, { payload }) => {
+      console.log(payload);
+      state = state.map((item) => {
+        if (item.id === payload) {
+          item.favorito = !item.favorito;
+        }
+        return item;
+      });
+    },
+  },
 });
 
+export const { changeFavorite } = itemsSlice.actions;
 export default itemsSlice.reducer;
