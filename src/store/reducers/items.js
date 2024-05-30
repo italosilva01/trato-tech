@@ -283,7 +283,6 @@ const itemsSlice = createSlice({
   initialState,
   reducers: {
     changeFavorite: (state, { payload }) => {
-      console.log(payload);
       state = state.map((item) => {
         if (item.id === payload) {
           item.favorito = !item.favorito;

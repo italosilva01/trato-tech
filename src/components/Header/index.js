@@ -1,16 +1,18 @@
 import styles from "./Header.module.scss";
+import HeaderLessImage from "./HeaderLessImage";
+import HeaderWithImage from "./HeaderWithImage";
 
 export default function Header({ title, description, className = "", image }) {
+  const comumProps = {
+    title: title,
+    description: description,
+  };
   return (
-    <header className={`${styles.header} ${className}`}>
-      <div className={styles["header-text"]}>
-        <h1>{title}</h1>
-        <h2>{description}</h2>
-      </div>
-
-      <div className={styles["header-imagem"]}>
-        <img alt={title} src={image} />
-      </div>
+    <header className={styles.header}>
+      {title && !image && <HeaderLessImage {...comumProps} />}
+      {title && image && (
+        <HeaderWithImage {...comumProps} image={image} className={className} />
+      )}
     </header>
   );
 }

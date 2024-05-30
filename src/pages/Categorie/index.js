@@ -11,8 +11,6 @@ export default function Categorie() {
     itens: state.items.filter((item) => item.categoria === nameCategorie),
   }));
 
-  console.log(categorie);
-  console.log(itens);
   return (
     <div>
       <Header
