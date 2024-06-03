@@ -1,9 +1,13 @@
-import { useEffect } from "react";
 import styles from "./Item.module.scss";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import {
+  AiOutlineHeart,
+  AiFillHeart,
+  AiFillMinusCircle,
+  AiFillPlusCircle,
+} from "react-icons/ai";
 import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { changeCar } from "store/reducers/car";
+import { changeCar, changeQuantity } from "store/reducers/car";
 import { changeFavorite } from "store/reducers/items";
 import classNames from "classnames";
 
@@ -11,8 +15,21 @@ const iconeProps = {
   size: 24,
   color: "#041833",
 };
+const buttonsProps = {
+  size: 32,
+  color: "#1875E8",
+};
 export default function Item(props) {
-  const { foto, titulo, descricao, preco, favorito, id, isInShopCar } = props;
+  const {
+    foto,
+    titulo,
+    descricao,
+    preco,
+    favorito,
+    id,
+    isInShopCar,
+    quantity,
+  } = props;
 
   const dispatch = useDispatch();
   const car = useSelector((state) => state.cars);
@@ -24,6 +41,13 @@ export default function Item(props) {
     dispatch(changeCar(id));
   };
 
+  const handleAddItemToCar = () => {
+    dispatch(changeQuantity({ id, quantity: +1 }));
+  };
+
+  const handleDecreaseItemToCar = () => {
+    if (quantity >= 1) dispatch(changeQuantity({ id, quantity: -1 }));
+  };
   return (
     <div
       className={classNames(styles.item, {
@@ -55,13 +79,27 @@ export default function Item(props) {
                 onClick={handleFavoriteItem}
               />
             )}
-
-            <FaCartPlus
-              {...iconeProps}
-              color={itemInCar ? "#1875E8" : iconeProps.color}
-              className={styles["item-acao"]}
-              onClick={handleChangeShopCar}
-            />
+            {isInShopCar ? (
+              <div className={styles.quantidade}>
+                Quantidade:{" "}
+                <AiFillMinusCircle
+                  {...buttonsProps}
+                  onClick={handleDecreaseItemToCar}
+                />
+                <span>{String(quantity || 0).padStart(2, "0")}</span>
+                <AiFillPlusCircle
+                  {...buttonsProps}
+                  onClick={handleAddItemToCar}
+                />
+              </div>
+            ) : (
+              <FaCartPlus
+                {...iconeProps}
+                color={itemInCar ? "#1875E8" : iconeProps.color}
+                className={styles["item-acao"]}
+                onClick={handleChangeShopCar}
+              />
+            )}
           </div>
         </div>
       </div>

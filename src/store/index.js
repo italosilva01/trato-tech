@@ -1,16 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 //Adicionando estado no Store
-import categories from "./reducers/categories";
-import items from "./reducers/items";
-import car from "./reducers/car";
+import categoriesSlice from "./reducers/categories";
+import itemsSlice from "./reducers/items";
+import carSlice from "./reducers/car";
+import searchSlice from "./reducers/search";
 //import count from "./reducers/count";
 const storeCategories = configureStore({
   reducer: {
-    categories: categories,
-    items: items,
+    categories: categoriesSlice,
+    items: itemsSlice,
     // count: count,
-    cars: car,
+    cars: carSlice,
+    search: searchSlice,
   },
 });
 

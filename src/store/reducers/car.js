@@ -13,8 +13,15 @@ const carSlice = createSlice({
       }
       return state.filter((item) => item.id !== payload);
     },
+    changeQuantity: (state, { payload }) => {
+      state = state.map((itemInCar) => {
+        if (itemInCar.id === payload.id) itemInCar.quantity += payload.quantity;
+        return itemInCar;
+      });
+    },
+    resetCar: () => initialState,
   },
 });
 
-export const { changeCar } = carSlice.actions;
+export const { changeCar, changeQuantity, resetCar } = carSlice.actions;
 export default carSlice.reducer;
